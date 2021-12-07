@@ -1,7 +1,7 @@
 .scenesPage{
     width: 100%;
     background-color: black;
-    height: 50vh;
+    height: max-content;
     display: flex;
 }
 
@@ -18,6 +18,13 @@
     color: blanchedalmond;
 }
 
-ul{
-    list-style:disc;
+.list{
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+}
+
+.list li{
+    list-style:none;
+    margin: 0 20px;
 }

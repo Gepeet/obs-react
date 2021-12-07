@@ -1,0 +1,13 @@
+.previewPage{
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    padding: 20px 20px;
+}
+
+.previewContainer{
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background-color: blanchedalmond;
+}

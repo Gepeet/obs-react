@@ -3,12 +3,35 @@ import Log from './Log';
 import react,{useState} from 'react';
 import Controller from './Controller';
 import Scenes from './Scenes';
-const OBSWebSocket = require('obs-websocket-js');
+import OBSWebSocket from 'obs-websocket-js'
+import PreviewScene from './PreviewScene';
 
+const obs = new OBSWebSocket();
+
+let screenShotPreview = ""
+
+  function handleRecord(){
+    obs.send('StartRecording')
+  }
+  function handleStopRecord(){
+    obs.send('StopRecording')
+  }
+  function handlePause(){
+    obs.send('PauseRecording')
+  }
+  function handleResumeRecord(){
+    obs.send('ResumeRecording')
+  }
+
+  function previewScene(){
+    obs.send('TakeSourceScreenshot', { sourceName: 'Scene 4', embedPictureFormat: 'png', width: 960, height: 540 })
+    .then(data=>{
+      screenShotPreview = data.img
+    })
+  }
 
 function App() {
 
-  const obs = new OBSWebSocket();
   const [connection, setConnection] = useState(false)
   const[scenesList, setScenesList] = useState([])
 
@@ -16,44 +39,43 @@ function App() {
     obs.connect({
       address: host,
       password: pass
-  })
-  .then(() => {
-    console.log(`Success! We're connected & authenticated.`);
-    setConnection(true)
-    alert(`Success! We're connected & authenticated.`)
-    return obs.send('GetSceneList');
-  })
-  .then(data => {
-    console.log(`${data.scenes.length} Available Scenes!`);
-    
-    data.scenes.forEach(scene => {
-     setScenesList(cs=> [...cs, scene.name])
-        if (scene.name !== data.currentScene) {
-            console.log(`Found a different scene! Switching to Scene: ${scene.name}`);
+    })
+    .then(() => {
+      setConnection(true)
+      return obs.send('GetSceneList');
+    })
+    .then(data => {
+      
+      data.scenes.forEach(scene => {
+      setScenesList(cs=> [...cs, scene.name])
+          if (scene.name !== data.currentScene) {
+              console.log(`Found a different scene! Switching to Scene: ${scene.name}`);
 
-            obs.send('SetCurrentScene', {
-                'scene-name': scene.name
-            });
-        }
-    });
-  })
+              obs.send('SetCurrentScene', {
+                  'scene-name': scene.name
+              });
+          }
+      });
+    })
   }
-
-  // obs.on('ConnectionOpened', () => {
-  //   const handleRecord = ()=>{
-  //     obs.send('StartRecording')
-  //   }
-  // })
 
   return (
     <div className="App">
       {!connection && <Log handleLog={handleLog}/>}
       {connection && 
-      <Scenes scenes={scenesList}/>}
-      {/* {connection &&
+      <PreviewScene imgURL={screenShotPreview}/>}
+      {connection && 
+      <Scenes 
+      previewScene={previewScene}
+      scenes={scenesList}/>}
+      {connection &&
       <Controller
-      handleRecord={handleRecord}/>
-      } */}
+      handleRecord={handleRecord}
+      handleStopRecord={handleStopRecord}
+      handlePause={handlePause}
+      handleResumeRecord={handleResumeRecord}
+      />
+      }
     </div>
   );
 }
