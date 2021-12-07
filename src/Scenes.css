@@ -1,0 +1,22 @@
+.scenesPage{
+    width: 100%;
+    background-color: black;
+    height: 50vh;
+    display: flex;
+}
+
+.scenesContainer{
+    margin: auto;
+    background-color: navy;
+    padding: 20px 30px;
+}
+
+.scenesContainer h2{
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 15px;
+}
+
+ul{
+    list-style:decimal;
+}
