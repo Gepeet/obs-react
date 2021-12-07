@@ -15,8 +15,9 @@
     font-size: 1.5rem;
     color: white;
     margin-bottom: 15px;
+    color: blanchedalmond;
 }
 
 ul{
-    list-style:decimal;
+    list-style:disc;
 }

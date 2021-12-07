@@ -1,17 +1,25 @@
 import React,{useState} from 'react'
 import './Controller.css'
 
-const Controller = () => {
+const Controller = ({handleRecord}) => {
+
 
     const [recording, setRecording]= useState(false)
     const [paused, setPaused]= useState(false)
+
+    const record=(e)=>{
+        e.preventDefault()
+        handleRecord()
+        setRecording(!recording);
+        
+    }
 
     return (
         <div className="controllerPage">
            
             <div className="controllerContainer">
                 <h1>Controller</h1>
-                {!recording &&<button className="record">Record</button>}
+                {!recording &&<button onClick={record} className="record">Record</button>}
 
                 {recording &&<button className="stop">Stop Record</button>}
 

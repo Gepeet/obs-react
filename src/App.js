@@ -6,8 +6,6 @@ import Scenes from './Scenes';
 const OBSWebSocket = require('obs-websocket-js');
 
 
-
-
 function App() {
 
   const obs = new OBSWebSocket();
@@ -15,7 +13,6 @@ function App() {
   const[scenesList, setScenesList] = useState([])
 
   const handleLog=(host, pass)=>{
-    console.log(host,pass)
     obs.connect({
       address: host,
       password: pass
@@ -42,14 +39,21 @@ function App() {
   })
   }
 
+  // obs.on('ConnectionOpened', () => {
+  //   const handleRecord = ()=>{
+  //     obs.send('StartRecording')
+  //   }
+  // })
+
   return (
     <div className="App">
       {!connection && <Log handleLog={handleLog}/>}
       {connection && 
       <Scenes scenes={scenesList}/>}
-      {connection &&
-      <Controller/>
-      }
+      {/* {connection &&
+      <Controller
+      handleRecord={handleRecord}/>
+      } */}
     </div>
   );
 }

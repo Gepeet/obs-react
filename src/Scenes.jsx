@@ -11,9 +11,9 @@ const Scenes = ({scenes}) => {
                 <h2>Scenes List</h2>
                 {list.map(data=>{
                     return(
-                    <ul key={data.index}>
-                        <li>{data}</li>
-                    </ul>
+                    <table>
+                        <li key={data.key}>{data}</li>
+                    </table>
                     )
                 })}
             </div>
