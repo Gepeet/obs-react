@@ -1,0 +1,57 @@
+.controllerPage{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.controllerContainer{
+    display: flex;
+    flex-direction: column;
+    margin:auto;
+}
+
+.controllerContainer h1{
+    font-size: 2rem;
+}
+
+.controllerContainer button{
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.record{
+    background-color: green;
+
+}
+
+.record:hover{
+    background-color: rgb(4, 117, 4);
+}
+
+.stop{
+    background-color: red;
+
+}
+.stop:hover{
+    background-color: rgb(196, 28, 28);
+}
+
+.pause{
+    background-color: darkgray;
+
+}
+.pause:hover{
+    background-color: rgb(139, 134, 134);
+}
+
+.resume{
+    background-color: green;
+}
+.resume:hover{
+    background-color: rgb(9, 121, 9);
+}
+
