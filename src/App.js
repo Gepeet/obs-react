@@ -4,7 +4,7 @@ import react,{useState} from 'react';
 import Controller from './Controller';
 import Scenes from './Scenes';
 import OBSWebSocket from 'obs-websocket-js'
-import PreviewScene from './PreviewScene';
+// import PreviewScene from './PreviewScene';
 
 const obs = new OBSWebSocket();
 
@@ -66,11 +66,11 @@ function App() {
   return (
     <div className="App">
       {!connection && <Log handleLog={handleLog}/>}
-      {connection && 
-      <PreviewScene 
+      {/* {connection && 
+      <PreviewScene  */}
       
-      // imgURL={screenShotPreview}
-      />}
+      {/* // imgURL={screenShotPreview} */}
+      {/* />} */}
       {connection && 
       <Scenes 
       // previewScene={previewScene}
