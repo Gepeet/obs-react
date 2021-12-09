@@ -4,6 +4,7 @@
     margin: 10px 0;
     display: flex;
     background-color: rgb(26, 22, 22);
+    padding: 50px 0;
 }
 
 .controllerContainer{
@@ -65,3 +66,15 @@
     background-color: rgb(9, 121, 9);
 }
 
+.recordStat{
+    display: flex;
+    align-items: center;
+}
+
+.recordStat .lightStatus{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid rgb(80, 79, 79);
+    margin-right: 10px;
+}

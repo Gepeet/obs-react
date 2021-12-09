@@ -6,7 +6,7 @@ const Scenes = ({scenes,previewScene}) => {
     const list = scenes;
 
     const handleScenePreview= (data)=>{
-        console.log(data)
+        // console.log(data)
         // previewScene(data)
     }
 
