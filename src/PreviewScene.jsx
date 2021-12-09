@@ -5,7 +5,6 @@ const PreviewScene = (imgURL) => {
     return (
         <div className="previewPage">
             <img src={imgURL} alt="preview scene" className="previewContainer"/>
-            
         </div>
     )
 }

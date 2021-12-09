@@ -13,11 +13,7 @@ const obs = new OBSWebSocket();
     obs.send('StartRecording',{})
     .then(()=>{
     obs.send('GetRecordingStatus', {})
-    .then(
-      data=> console.log(data.recordTimecode)
-     )
-    
-    })
+    .then(data=> console.log(data.recordTimecode))})
   }
   function handleStopRecord(){
     obs.send('StopRecording',{})

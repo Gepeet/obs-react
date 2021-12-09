@@ -8,30 +8,28 @@ const Controller = ({
     handlePause,
     handleResumeRecord
     }) => {
+
     const [recording, setRecording]= useState(false)
     const [paused, setPaused]= useState(false)
     const [time, setTime] = useState(0)
     const [lightOpacity, setLightOpacity] = useState("gray")
 
-    const record=(e)=>{
+    const record=()=>{
         handleRecord()
         setRecording(true)
         setPaused(false)
         handleLight(true)
     }
     const stop=(e)=>{
-        e.preventDefault()
         handleStopRecord()
         setRecording(!recording);
         handleLight(false)
     }
     const pause=(e)=>{
-        e.preventDefault()
         handlePause()
         setPaused(!paused);
     }
     const resume=(e)=>{
-        e.preventDefault()
         handleResumeRecord()
         setPaused(!paused);
     }
@@ -43,8 +41,6 @@ const Controller = ({
             setLightOpacity("gray")
         }
     }
-
-    
     
     useEffect(() => {
         let interval = null;
@@ -65,7 +61,6 @@ const Controller = ({
         };
       }, [recording, paused]);
       
-
     return (
         <div className="controllerPage">
             <div className="controllerContainer">
