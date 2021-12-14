@@ -4,7 +4,7 @@ import react,{useState} from 'react';
 import Controller from './Controller';
 import Scenes from './Scenes';
 import OBSWebSocket from 'obs-websocket-js'
-// import PreviewScene from './PreviewScene';
+import PreviewScene from './PreviewScene';
 
 const obs = new OBSWebSocket();
 
@@ -12,28 +12,31 @@ const obs = new OBSWebSocket();
   function handleRecord(){
     obs.send('StartRecording',{})
     .then(()=>{
-    obs.send('GetRecordingStatus', {})
-    .then(data=> console.log(data.recordTimecode))})
+    obs.send('GetRecordingStatus', {})})
   }
   function handleStopRecord(){
     obs.send('StopRecording',{})
     obs.send('GetRecordingStatus', {})
-    .then(data=> console.log(data.recordTimecode))
   }
   function handlePause(){
     obs.send('PauseRecording',{})
     obs.send('GetRecordingStatus', {})
-    .then(data=> console.log(data))
   }
   function handleResumeRecord(){
     obs.send('ResumeRecording')
   }
+
+  
 
 function App() {
 
   const [connection, setConnection] = useState(false)
   const[scenesList, setScenesList] = useState([])
   const[preview, setPreview] = useState()
+  const [currentScene, setCurrentScene]= useState('')
+  const [previewScene, setPreviewScene]= useState('')
+  const [studioMode, setStudioMode]= useState(null)
+  const [media, setMedia]= useState()
   
 
   const handleLog=(host, pass)=>{
@@ -43,10 +46,15 @@ function App() {
     })
     .then(() => {
       setConnection(true)
-      obs.send('GetRecordingStatus', {}).then(data=> console.log(data))
+      // obs.send('GetRecordingStatus', {}).then(data=> console.log(data))
       return obs.send('GetSceneList');
     })
     .then(data => {
+      obs.send('GetCurrentScene',{}).then(e=>setCurrentScene(e.name))
+      obs.send('GetPreviewScene',{}).then(e=>setPreviewScene(e.sources))
+      obs.send('GetStudioModeStatus',{}).then(e=>setStudioMode(e['studio-mode']))
+      obs.send('CreateSource',{'sceneName':'Scene 4','sourceKind':'image_source','sourceName':''}).then(e=>setMedia(e.mediaSources.sourceKind))
+
       
       data.scenes.forEach(scene => {
       setScenesList(cs=> [...cs, scene.name])
@@ -61,20 +69,28 @@ function App() {
     console.error('socket error:', err);
   });
 
-  obs.send('GetRecordingStatus', {}).then(data=> console.log(data))
+  const handleSceneChange=(data)=>{
+    obs.send('SetCurrentScene', {
+      'scene-name': data
+    });
+    setCurrentScene(data)
+  }
 
   return (
     <div className="App">
       {!connection && <Log handleLog={handleLog}/>}
-      {/* {connection && 
-      <PreviewScene  */}
-      
-      {/* // imgURL={screenShotPreview} */}
-      {/* />} */}
+      {connection && 
+      <PreviewScene 
+      media={media}
+      currentScene={previewScene}
+      />}
       {connection && 
       <Scenes 
       // previewScene={previewScene}
-      scenes={scenesList}/>}
+      studioMode={studioMode}
+      scenes={scenesList}
+      currentScene={currentScene}
+      handleSceneChange={handleSceneChange}/>}
       {connection &&
       <Controller
       handleRecord={handleRecord}

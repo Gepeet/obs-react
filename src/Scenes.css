@@ -7,14 +7,20 @@
 
 .scenesContainer{
     margin: auto;
-    background-color: navy;
-    padding: 20px 30px;
+    background-color: rgb(27, 27, 27);
+    padding: 30px 20px;
+    width: 50%;
+    border-radius: 30px;
+    min-width: max-content;
 }
 
-.scenesContainer h2{
+.title{
+    margin-bottom: 20px;
+}
+
+.title h2{
     font-size: 1.5rem;
     color: white;
-    margin-bottom: 15px;
     color: blanchedalmond;
 }
 
@@ -27,4 +33,31 @@
 .list li{
     list-style:none;
     margin: 0 20px;
+}
+
+.sceneNameContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sceneNameContainer span{
+    font-size: 10px;
+    color: rgb(206, 199, 199);
+}
+
+.title{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sturiomode{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sturiomode h3{
+    margin-left: 10px;
+    padding: 10px;
 }

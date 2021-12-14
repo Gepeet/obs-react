@@ -1,25 +1,33 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Scenes.css'
 
-const Scenes = ({scenes,previewScene}) => {
+const Scenes = ({scenes,previewScene, currentScene,studioMode,handleSceneChange}) => {
 
     const list = scenes;
-
-    const handleScenePreview= (data)=>{
-        // console.log(data)
-        // previewScene(data)
-    }
-
+    
     return (
         <div className="scenesPage">
             <div className="scenesContainer">
-                <h2>Scenes List</h2>
+                <div className='title'>
+                    <h2>Scenes List</h2>
+                    <div className='sturiomode'>
+                        <h2>Studio Mode</h2>
+                        {studioMode ? <h3 style={{
+                            'backgroundColor':'green'
+                        }}>Enabled</h3> : <h3 style={{
+                            'backgroundColor':'red'
+                        }}>Disabled</h3> }
+                    </div>
+                </div>
                 <div className="list">
                 {list.map(data=>{
                     return(
-                    
-                        <li onClick={handleScenePreview(data)}>{data}</li>
-                    
+                        <div className='sceneNameContainer'>
+                            <li onClick={()=>{
+                                handleSceneChange(data)
+                                }}>{data}</li>
+                            {currentScene === data ? <span>Current Scene</span>: <span></span>}
+                        </div>
                     )
                 })}
                 </div>
