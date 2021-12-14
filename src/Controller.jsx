@@ -27,7 +27,7 @@ const Controller = ({
     }
     const pause=(e)=>{
         handlePause()
-        setPaused(!paused);
+        setPaused(!paused)
     }
     const resume=(e)=>{
         handleResumeRecord()
@@ -69,7 +69,7 @@ const Controller = ({
                     {!recording &&<button onClick={record} className="record">Record</button>}
                     {recording && !paused &&<button onClick={stop} className="stop">Stop Record</button>}
                     {recording && !paused && <button onClick={pause} className="pause">Pause Record</button>}
-                    {recording, paused &&<button onClick={resume} className="resume">Resume Record</button>}
+                    {recording & paused &&<button onClick={resume} className="resume">Resume Record</button>}
                 </div>
                 <div className="recordStat">
                     <span style={{

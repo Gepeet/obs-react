@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './Scenes.css'
 
 const Scenes = ({scenes,previewScene, currentScene,studioMode,handleSceneChange}) => {

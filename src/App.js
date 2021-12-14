@@ -1,6 +1,6 @@
 import './App.css';
 import Log from './Log';
-import react,{useState} from 'react';
+import React,{useState} from 'react';
 import Controller from './Controller';
 import Scenes from './Scenes';
 import OBSWebSocket from 'obs-websocket-js'
@@ -32,7 +32,7 @@ function App() {
 
   const [connection, setConnection] = useState(false)
   const[scenesList, setScenesList] = useState([])
-  const[preview, setPreview] = useState()
+  // const[preview, setPreview] = useState()
   const [currentScene, setCurrentScene]= useState('')
   const [previewScene, setPreviewScene]= useState('')
   const [studioMode, setStudioMode]= useState(null)
