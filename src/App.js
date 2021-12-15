@@ -37,6 +37,7 @@ function App() {
   const [previewScene, setPreviewScene]= useState('')
   const [studioMode, setStudioMode]= useState(null)
   const [media, setMedia]= useState()
+  const[wholeCurrentScene,setWholeCurrentScene]= useState()
   
 
   const handleLog=(host, pass)=>{
@@ -50,12 +51,15 @@ function App() {
       return obs.send('GetSceneList');
     })
     .then(data => {
-      obs.send('GetCurrentScene',{}).then(e=>setCurrentScene(e.name))
+      obs.send('GetCurrentScene',{}).then(e=>{
+        setCurrentScene(e.name)
+        setWholeCurrentScene(e)
+      })
       obs.send('GetPreviewScene',{}).then(e=>setPreviewScene(e.sources))
       obs.send('GetStudioModeStatus',{}).then(e=>setStudioMode(e['studio-mode']))
       obs.send('CreateSource',{'sceneName':'Scene 4','sourceKind':'image_source','sourceName':''}).then(e=>setMedia(e.mediaSources.sourceKind))
 
-      
+      previewScreen()
       data.scenes.forEach(scene => {
       setScenesList(cs=> [...cs, scene.name])
       });
@@ -72,10 +76,37 @@ function App() {
   const handleSceneChange=(data)=>{
     obs.send('SetCurrentScene', {
       'scene-name': data
-    });
-    setCurrentScene(data)
+    })
+    .then(()=>{
+      setCurrentScene(data)
+    })
+    .then(()=>{
+      obs.send('TakeSourceScreenshot',{
+        'sourceName': wholeCurrentScene,
+        'embedPictureFormat': "png",
+        'width': 960,
+        'height': 540
+      }).then(e=>{
+        setMedia(e.img)
+      })
+    })
   }
 
+  const previewScreen = () => {
+    obs.send('TakeSourceScreenshot',{
+      'sourceName': wholeCurrentScene,
+      'embedPictureFormat': "png",
+      'width': 960,
+      'height': 540
+    })
+    .then(e=>{
+      setMedia(e.img)
+    })
+    .catch((err)=>console.log(err))
+
+    setTimeout(previewScreen,100);
+  }
+ 
   return (
     <div className="App">
       {!connection && <Log handleLog={handleLog}/>}
